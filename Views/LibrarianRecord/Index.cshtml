@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Book.Models.Librarian>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Librarian Info</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qualification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalExperience)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qualification)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalExperience)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.PhotoUrl)*@
+
+                    <img src="@FileLocation.RetriveFileFromFolder@item.PhotoUrl" class="img-thumbnail" height="100" width="100" asp-append-version="true" />
+
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+    $(".custom-file-input").on("change", function () {
+	    var fileName = $(this).val().split("\\").pop();
+	    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+
+
+    function DeleteItem(btn) {
+	    $(btn).closest('tr').remove();
+    }
+
+
+
+    function AddItem(btn) {
+
+	    var table = document.getElementById('ExpTable');
+	    var rows = table.getElementsByTagName('tr');
+
+	    var rowOuterHtml = rows[rows.length - 1].outerHTML;
+
+	    var lastrowIdx = document.getElementById('hdnLastIndex').value;
+
+	    var nextrowIdx = eval(lastrowIdx) + 1;
+
+	    document.getElementById('hdnLastIndex').value = nextrowIdx;
+
+	    rowOuterHtml = rowOuterHtml.replaceAll('_' + lastrowIdx + '_', '_' + nextrowIdx + '_');
+	    rowOuterHtml = rowOuterHtml.replaceAll('[' + lastrowIdx + ']', '[' + nextrowIdx + ']');
+	    rowOuterHtml = rowOuterHtml.replaceAll('-' + lastrowIdx, '-' + nextrowIdx);
+
+
+	    var newRow = table.insertRow();
+	    newRow.innerHTML = rowOuterHtml;
+
+
+
+	    var btnAddID = btn.id;
+	    var btnDeleteid = btnAddID.replaceAll('btnadd', 'btnremove');
+
+	    var delbtn = document.getElementById(btnDeleteid);
+	    delbtn.classList.add("visible");
+	    delbtn.classList.remove("invisible");
+
+
+	    var addbtn = document.getElementById(btnAddID);
+	    addbtn.classList.remove("visible");
+	    addbtn.classList.add("invisible");
+
+    }
+
+    </script>
+}
+

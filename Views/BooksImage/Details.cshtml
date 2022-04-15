@@ -1,0 +1,56 @@
+﻿@model Book.Models.Books
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="text-uppercase">Book Details</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.BookName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BookName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Edition)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Edition)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.PublishingDate)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PublishingDate)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Venue)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Venue)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.BookPicture)
+            </dt>
+            <dd class="col-sm-10">
+                <img src="@FileLocation.RetriveFileFromFolder@Model.BookPicture" class="img-thumbnail" height="100" width="100" asp-append-version="true" />
+            </dd>
+        </dl>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-info rounded-0"><i class="fa fa-pencil-alt"></i> Edit</a>
+            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-sm btn-danger rounded-0"><i class="fa fa-trash-alt"></i> Delete</a>
+            <a asp-action="Index" class="btn btn-sm btn-primary rounded-0"><i class="fas fa-fast-backward"></i> Back to List</a>
+        </div>
+    </div>
+</div>

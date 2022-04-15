@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Book.Models.Books>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Recent Book Published</h1>
+    <br />
+</div>
+
+<div class="container-fluid padding">
+    <div class="row">
+        <div class="row padding">
+            @foreach (var item in Model)
+             {
+                <div class="card" style="width: 16rem;margin-right:20px;">
+                    <img class="card-img-top" src="~/Uploads/@item.BookPicture" asp-append-version="true" alt="@item.BookName" height="300" width="250" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.BookName</h5>
+                        <a asp-controller="BooksImage" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+             }
+        </div>
+    </div>
+</div>
+
